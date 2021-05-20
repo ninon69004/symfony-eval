@@ -19,6 +19,45 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">MyMovieDb</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                        <ul class="navbar-nav me-auto">
+                           
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/movie">Movies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/actor">Actors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/studio">Studios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/genre">Genres</a>
+                            </li>
+                        
+                        </ul>
+                        <a class="nav-link" href="/login">
+                            <span class="material-icons" style="color: #fff;">account_circle</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+        <div style="display: flex; align-items: stretch">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>
