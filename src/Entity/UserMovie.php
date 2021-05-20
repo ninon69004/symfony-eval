@@ -89,4 +89,8 @@ class UserMovie
 
         return $this;
     }
+    public function __toString(): string 
+    {
+        return $this->getMovie() . ' - ' . $this->getUser();
+    }
 }

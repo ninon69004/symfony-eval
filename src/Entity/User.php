@@ -102,6 +102,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
+        // TODO 'ROLE_ADMIN'
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -220,5 +221,9 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+    public function __toString(): string 
+    {
+        return $this->getFirstName() . ' ' . $this->getLastname();
     }
 }
