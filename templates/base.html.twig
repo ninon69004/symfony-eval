@@ -46,11 +46,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/genre">Genres</a>
                             </li>
-                        
+                            {% if app.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin">Catalog manager</a>
+                                </li>
+                            {% endif %}
                         </ul>
-                        <a class="nav-link" href="/login">
-                            <span class="material-icons" style="color: #fff;">account_circle</span>
-                        </a>
+                        {% if app.user %}
+                            <span>{{ app.user.username }}</span>
+                            <a class="nav-link" href="/logout">
+                                <span class="material-icons" style="color: #fff;">logout</span>
+                            </a>
+                        {% else %}
+                             <a class="nav-link" href="/login">
+                                <span class="material-icons" style="color: #fff;">account_circle</span>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </nav>
