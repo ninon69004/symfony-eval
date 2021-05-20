@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -105,7 +107,6 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        // TODO 'ROLE_ADMIN'
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -128,7 +129,9 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $encoder = new SodiumPasswordEncoder();
+
+        $this->password =$encoder->encodePassword( $password, $this->getSalt());
 
         return $this;
     }
