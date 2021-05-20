@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Actor;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
@@ -22,7 +23,8 @@ class ActorCrudController extends AbstractCrudController
             // IdField::new('id'),
             TextField::new('firstName'),
             TextField::new('lastName'),
-            TextField::new('image'),
+            ImageField::new('image')->setUploadDir("/public/assets/upload/images")
+                                    ->setBasePath("assets/upload/images"),
             DateField::new('dateOfBirth'),
             DateField::new('dateOfDeath'),
             AssociationField::new('movies'),

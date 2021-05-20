@@ -2,6 +2,9 @@ h1, h2, h3{
     text-transform: uppercase !important;
     text-align: center !important;
 }
+a{
+    text-decoration: none !important;
+}
 .text_center {
     text-align: center !important;
 }

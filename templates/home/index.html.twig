@@ -3,19 +3,120 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    {% if app.user %}
-        <h1 >Hello {{ app.user.username }}.</h1>
-    {% endif %}
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Ninon/SYMFONY/symfony-eval/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Ninon/SYMFONY/symfony-eval/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+<script type="text/javascript">
+    function redirect(path){
+        console.log(path);
+    }
+</script>
+<div style="display: flex; align-items: stretch;">
+            
+        <!-- Sidebar -->
+        <nav id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3">
+            <div class="sidebar-header">
+                <h3>Movie Categories</h3>
+            </div>
+            
+            <ul class="list-unstyled components">
+                
+                {% for nav in navItems %}
+                    <li>
+                        <a href="#{{nav.title}}" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" style="font-size: 1.5rem; font-wigth: bold;">{{nav.title}}</a>
+                        <ul class="collapse list-unstyled" id="{{nav.title}}">
+                            {% for item in nav.items %}
+                                <li>
+                                    {% if item.name  is defined %}
+                                        <a href="/{{nav.path}}/{{item.id}}">{{item.name }}</a>
+                                    {% else %}
+                                        <a href="/{{nav.path}}/{{item.id}}">{{item.firstName }} {{item.lastName }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                   
+                {% endfor %}
+            </ul>
+        </nav>          
+        <div id="content" class="container">
+            {% if category is defined %}
+                {% if category.item.name is defined %}
+                    <h1>{{category.title}}: {{category.item.name}}</h1>
+                {% else %}
+                    <h1>{{category.title}}: {{category.item.firstName}} {{category.item.lastName}}</h1>
+                    <div>
+                        {% if category.item.dateOfBirth is defined %}
+                            <div class="text-center mb-2">{{category.item.dateOfBirth|date("m/d/Y")}} - {{category.item.dateOfBirth|date("m/d/Y") ? category.item.dateOfBirth|date("m/d/Y") : '?'}}</div>
+                        {% endif %}
+                        {% if category.item.image != null %}
+                            <img style="width:100%"; src="/assets/upload/images/{{category.item.image}}" alt="{{category.item.firstName}} {{category.item.lastName}}"/>
+                        {# {% else %}
+                            <div style="text-align:center;padding:5px; ">
+                                <div class="material-icons">image_not_supported</div>
+                                <div>No image</div>
+                            </div> #}
+                        {% endif %}
+                        <div class="mb-2">{{category.item.biography | raw}}</div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <h1> {{items.title}} Catalog </h2>
+            {% endif %}
+            
+            <div class="row" style="justify-content: center;">
+                {% for item in items.items %}
+                    <div class="card col-md-4" style="width: 18rem; margin:5px;">
+                        <a href="{{items.path}}/{{item.id }}">
+                            <div class="card-body" 
+                                style="max-height:500px;
+                                {% if item.synopsis is defined or item.biography is defined %}
+                                    height:250px;
+                                {% endif %}
+                                overflow: auto hidden;
+                                whitespace: no-wrap;
+                                box-sizing: content-box;"
+                            >
+                                {% if item.name is defined %}
+                                    <h5 class="card-title">{{item.name}}</h5>
+                                {% endif %}
+                                {% if item.synopsis is defined %}
+                                    {% if item.image != null %}
+                                        <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.name}}"/>
+                                    {# {% else %}
+                                        <div style="text-align:center;padding:5px; ">
+                                            <div class="material-icons">image_not_supported</div>
+                                            <div>No image</div>
+                                        </div> #}
+                                    {% endif %}
+                                    <p class="card-text" style="text-overflow:ellipsis;">
+                                        {{item.synopsis | raw}}
+                                    </p>
+                                {% endif %}
+                                {% if item.firstName is defined %}
+                                    <h5 class="card-title">{{item.firstName}} {{item.lastName}}</h5>
+                                    {% if item.dateOfBirth is defined %}
+                                        <div class="text-muted mb-2">{{item.dateOfBirth|date("m/d/Y")}} - {{item.dateOfBirth|date("m/d/Y") ? item.dateOfBirth|date("m/d/Y") : '?'}}</div>
+                                    {% endif %}
+                                    {% if item.image != null %}
+                                        <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.firstName}}{{item.lastName}}"/>
+                                    {# {% else %}
+                                        <div style="text-align:center;padding:5px; ">
+                                            <div class="material-icons">image_not_supported</div>
+                                            <div>No image</div>
+                                        </div> #}
+                                    {% endif %}
+                                    <p class="card-text" style="text-overflow:ellipsis;">
+                                        {{item.biography | raw}}
+                                    </p>
+                                {% endif %}
+                                
+                                
+                                
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
 {% endblock %}

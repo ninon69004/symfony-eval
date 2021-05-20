@@ -61,6 +61,7 @@ class AppFixtures extends Fixture
             $actor->setFirstName($faker->firstName());
             $actor->setLastName($faker->lastName());
             $actor->setImage(null);
+            $actor->setBiography($faker->text($faker->numberBetween(50,1000)));
             $date1 = $faker->dateTimeBetween($startDate = '-120 years', $endDate = 'now', $timezone = null);
             $actor->setDateOfBirth($date1);
             $actor->setDateOfDeath($faker->dateTimeBetween($startDate = $date1, $endDate = 'now', $timezone = null));

@@ -49,6 +49,11 @@ class Actor
      */
     private $movies;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $biography;
+
     public function __construct()
     {
         $this->movies = new ArrayCollection();
@@ -146,5 +151,17 @@ class Actor
     public function __toString(): string 
     {
         return $this->getFirstName() . ' ' . $this->getLastname();
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
+
+        return $this;
     }
 }

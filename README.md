@@ -2,8 +2,11 @@
 # Evaluation symfony
 
 ## Installation
-    git clone 
+    git clone https://github.com/ninon69004/symfony-eval.git
     symfony server:start -d
+
+    check your database credentials and version in .env
+
     symfony console doctrine:database:create
     symfony console make:migration
     symfony console doctrine:migrations:migrate
@@ -24,6 +27,12 @@
 
     https://stackoverflow.com/questions/6734821/how-to-set-a-class-attribute-to-a-symfony2-form-input
     class on input
+
+    https://bootstrapious.com/p/bootstrap-sidebar
+    side bar classes
+
+    https://stackoverflow.com/questions/6401714/php-order-array-by-date
+    sorting dates
 #todo
 templtes
 routes
