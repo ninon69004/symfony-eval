@@ -8,10 +8,10 @@
         console.log(path);
     }
 </script>
-<div style="display: flex; align-items: stretch;">
+<div style="display: flex; align-items: stretch; height: 100%;" >
             
         <!-- Sidebar -->
-        <nav id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3">
+        <div id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3); height: 100%; overflow-y: scroll;">
             <div class="sidebar-header">
                 <h3>Movie Categories</h3>
             </div>
@@ -20,8 +20,8 @@
                 
                 {% for nav in navItems %}
                     <li>
-                        <a href="#{{nav.title}}" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" style="font-size: 1.5rem; font-wigth: bold;">{{nav.title}}</a>
-                        <ul class="collapse list-unstyled" id="{{nav.title}}">
+                        <a href="#{{nav.title}}" aria-controls="{{nav.title}}" data-bs-toggle="collapse" aria-expanded="true" class="dropdown-toggle" style="font-size: 1.5rem; font-wigth: bold;">{{nav.title}}</a>
+                        <ul class="collapse list-unstyled show" id="{{nav.title}}">
                             {% for item in nav.items %}
                                 <li>
                                     {% if item.name  is defined %}
@@ -36,8 +36,8 @@
                    
                 {% endfor %}
             </ul>
-        </nav>          
-        <div id="content" class="container">
+        </div>          
+        <div id="content" class="container" style="height: 100%; overflow-y: scroll;">
             {% if category is defined %}
                 {% if category.item.name is defined %}
                     <h1>{{category.title}}: {{category.item.name}}</h1>

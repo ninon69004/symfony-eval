@@ -54,3 +54,25 @@ form[name="registration_form"] div{
     justify-content: center !important;
     align-items: center;
 }
+
+.dropdown-toggle::after {
+    vertical-align: .155em !important;
+}
+
+* {
+    scrollbar-color: var(--bs-dark) var(--bs-light);
+    scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--bs-dark);
+    border-radius: 5px;
+}
