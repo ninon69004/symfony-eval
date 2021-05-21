@@ -6,6 +6,7 @@ use App\Repository\ActorRepository;
 use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use App\Repository\StudioRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,13 +46,13 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/genre", name="genre")
+     * @Route("/movie/{id}", name="moviesView")
      */
-    public function genre(MovieRepository $repoMovie, GenreRepository $repoGenre, ActorRepository $repoActor, StudioRepository $repoStudio ): Response
+    public function moviesView(MovieRepository $repoMovie, GenreRepository $repoGenre, ActorRepository $repoActor, StudioRepository $repoStudio, $id ): Response
     {
         $navItems = [];
 
-        $genres = ['title' => "Genre",
+        $genres = ['title' => "Genres",
                     'path' => "genre",
                     'items' => $repoGenre->findAll()];
         $navItems[]= $genres;
@@ -65,10 +66,42 @@ class HomeController extends AbstractController
                     'path' => "studio",
                     'items' => $repoStudio->findAll()];
         $navItems[]= $studios;
+        $movie = ['title' => "Movie",
+                    'path' => "movie",
+                    'item'=>$repoMovie->find($id)];
+
+        return $this->render('home/index.html.twig', [
+            'navItems'=> $navItems,
+            'category'=> $movie
+        ]);
+    }
+
+    /**
+     * @Route("/genre", name="genre")
+     */
+    public function genre(MovieRepository $repoMovie, GenreRepository $repoGenre, ActorRepository $repoActor, StudioRepository $repoStudio ): Response
+    {
+        $navItems = [];
+
+        $genres = ['title' => "Genre",
+                    'path' => "genre",
+                    'items' => $repoGenre->findAll()];
+
+        $actors = ['title' => "Actors",
+                    'path' => "actor",
+                    'items' => $repoActor->findAll()];
+        $navItems[]= $actors;
+
+        $studios = ['title' => "Studios",
+                    'path' => "studio",
+                    'items' => $repoStudio->findAll()];
+        $navItems[]= $studios;
+        
 
         return $this->render('home/index.html.twig', [
             'items'=> $genres,
             'navItems'=> $navItems
+            
         ]);
     }
 
@@ -138,13 +171,7 @@ class HomeController extends AbstractController
         $movies = ['title' => "Movie",
                     'path' => "movie",
                     'items' => $actor['item']->getMovies()];;
-       /*  dd($movies);
-        usort($movies, function($a1, $a2) {
-            $v1 = strtotime($a1->getReleaseDate()->format('Y-m-d'));
-            $v2 = strtotime($a2->getReleaseDate()->format('Y-m-d'));
-            return $v2 - $v1; // $v2 - $v1 to reverse direction
-         });
- */
+  
         $actors = ['title' => "Actors",
                     'path' => "actor",
                     'items' => $repoActor->findAll()];
@@ -207,6 +234,38 @@ class HomeController extends AbstractController
             'items' => $movies,
             'navItems'=> $navItems,
             'category'=> $studio
+        ]);
+    }
+
+    /**
+     * @Route("/profile/{id}", name="profileView")
+     */
+    public function profileView(MovieRepository $repoMovie, GenreRepository $repoGenre, ActorRepository $repoActor, StudioRepository $repoStudio, UserRepository $repoUser, $id): Response
+    {
+        $navItems = [];
+
+        $genres = ['title' => "Genres",
+                    'path' => "genre",
+                    'items' => $repoGenre->findAll()];
+        $navItems[]= $genres;
+
+        $actors = ['title' => "Actor",
+                    'path' => "actor",
+                    'items' => $repoActor->findAll()];
+        $navItems[]= $actors;
+
+        $studios = ['title' => "Studios",
+                    'path' => "studio",
+                    'items' => $repoStudio->findAll()];
+        $navItems[]= $studios;
+
+        $profile = ['title' => "Profile",
+            'path' => "profile",
+            'item' => $repoUser->find($id)];
+
+        return $this->render('home/index.html.twig', [
+            'navItems'=> $navItems,
+            'category'=> $profile
         ]);
     }
 

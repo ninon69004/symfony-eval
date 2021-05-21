@@ -103,6 +103,15 @@ class AppFixtures extends Fixture
             $manager->persist($userM);
             $userMovies[] = $userM;
         }
+        for( $i=0; $i < 15; $i++){
+            $userM = new UserMovie();
+            $userM->setUser($users[0]);
+            $userM->setMovie($movies[$faker->numberBetween(0,49)]);
+            $userM->setList($faker->boolean($chanceOfGettingTrue = 50));
+            $userM->setSeen($faker->boolean($chanceOfGettingTrue = 50));
+            $manager->persist($userM);
+            $userMovies[] = $userM;
+        }
         
         $manager->flush();
     }

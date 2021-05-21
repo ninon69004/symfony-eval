@@ -1,17 +1,36 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Home{% endblock %}
+{% block title %}
+    {% if category is defined %}
+        {% if category.item.name is defined %}
+            {{category.title}}: {{category.item.name}}
+        {% else %}
+            {{category.title}}: {{category.item.firstName}} {{category.item.lastName}}
+        {% endif %}
+    {% else %}
+        {% if items.title is defined %}
+            {{items.title}} Catalog
+        {% else %}
+            MyMovieDb
+        {% endif %}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 <script type="text/javascript">
     function redirect(path){
-        console.log(path);
+        $(document).ready(function () {
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
+        });
     }
 </script>
-<div style="display: flex; align-items: stretch; height: 100%;" >
+<div style="display: flex; align-items: stretch; height: 100%; width: 100vw;" >
             
         <!-- Sidebar -->
-        <div id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3); height: 100%; overflow-y: scroll;">
+        <div id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3); height: 100%; overflow-y: scroll; width: 20%;">
             <div class="sidebar-header">
                 <h3>Movie Categories</h3>
             </div>
@@ -37,84 +56,122 @@
                 {% endfor %}
             </ul>
         </div>          
-        <div id="content" class="container" style="height: 100%; overflow-y: scroll;">
-            {% if category is defined %}
-                {% if category.item.name is defined %}
-                    <h1>{{category.title}}: {{category.item.name}}</h1>
+        <div id="content" style="height: 100%; overflow-y: scroll; width: 80%;">
+            <div class="container">
+                <a></a>
+                {% if category is defined %}
+                    {% if category.item.name is defined %}
+                        <h1>{{category.title}}: {{category.item.name}}</h1>
+                    {% else %}
+                        <h1>{{category.title}}: {{category.item.firstName}} {{category.item.lastName}}</h1>
+                    {% endif %}
+                    {% if category.item.image is defined %}
+                        <div>
+                            {% if category.item.dateOfBirth is defined %}
+                                <div class="text-center mb-2">{{category.item.dateOfBirth|date("m/d/Y")}} - {{category.item.dateOfBirth|date("m/d/Y") ? category.item.dateOfBirth|date("m/d/Y") : '?'}}</div>
+                            {% elseif category.item.releaseDate is defined %}
+                                <div class="text-center mb-2">{{ category.item.releaseDate|date("m/d/Y")}}</div>
+                            {% endif %}
+                            {% if category.item.image != null %}
+                                <img style="width:100%"; src="/assets/upload/images/{{category.item.image}}" alt="{{category.item.firstName}} {{category.item.lastName}}"/>
+                            {# {% else %}
+                                <div style="text-align:center;padding:5px; ">
+                                    <div class="material-icons">image_not_supported</div>
+                                    <div>No image</div>
+                                </div> #}
+                            {% endif %}
+                            {% if category.item.biography is defined %}
+                                <div class="mb-2">{{category.item.biography | raw}}</div>
+                            {% else %}
+                                <div class="mb-2">{{category.item.synopsis | raw}}</div>
+                                {% for movie in category.item.userMovies %}
+                                    <div class="mb-2">For user : {{movie.user}}</div>
+                                    {% if movie.list is defined or movie.seen is defined %}
+                                        <ul>
+                                            {% if movie.list is defined and movie.list %}<li>In watchlist</li>{% endif %}
+                                            {% if movie.seen is defined %}<li>{{ movie.seen ? 'Seen' : 'Not Seen' }}</li>{% endif %}
+                                        </ul>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if category.item.userMovies is defined and category.item.username is defined %}
+                        <div class="row">
+                                {% for movie in category.item.userMovies %}
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="mb-2">For movie : <span style="font-weight: bold;">{{movie.movie}}</span></div>
+                                        {% if movie.list is defined or movie.seen is defined %}
+                                            <ul>
+                                                {% if movie.list is defined and movie.list %}<li>In watchlist</li>{% endif %}
+                                                {% if movie.seen is defined %}<li>{{ movie.seen ? 'Seen' : 'Not Seen' }}</li>{% endif %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            
+                        </div>
+                    {% endif %}
                 {% else %}
-                    <h1>{{category.title}}: {{category.item.firstName}} {{category.item.lastName}}</h1>
-                    <div>
-                        {% if category.item.dateOfBirth is defined %}
-                            <div class="text-center mb-2">{{category.item.dateOfBirth|date("m/d/Y")}} - {{category.item.dateOfBirth|date("m/d/Y") ? category.item.dateOfBirth|date("m/d/Y") : '?'}}</div>
-                        {% endif %}
-                        {% if category.item.image != null %}
-                            <img style="width:100%"; src="/assets/upload/images/{{category.item.image}}" alt="{{category.item.firstName}} {{category.item.lastName}}"/>
-                        {# {% else %}
-                            <div style="text-align:center;padding:5px; ">
-                                <div class="material-icons">image_not_supported</div>
-                                <div>No image</div>
-                            </div> #}
-                        {% endif %}
-                        <div class="mb-2">{{category.item.biography | raw}}</div>
+                    <h1> {{items.title}} Catalog </h2>
+                {% endif %}
+
+                {% if items is defined %}
+                    <div class="row" style="justify-content: center;">
+                        {% for item in items.items %}
+                            <div class="card col-md-4" style="width: 18rem; margin:5px;">
+                                <a href="/{{items.path}}/{{item.id }}">
+                                    <div class="card-body" 
+                                        style="max-height:500px;
+                                        {% if item.synopsis is defined or item.biography is defined %}
+                                            height:250px;
+                                        {% endif %}
+                                        overflow: auto hidden;
+                                        whitespace: no-wrap;
+                                        box-sizing: content-box;"
+                                    >
+                                        {% if item.name is defined %}
+                                            <h5 class="card-title">{{item.name}}</h5>
+                                        {% endif %}
+                                        {% if item.synopsis is defined %}
+                                            {% if item.image != null %}
+                                                <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.name}}"/>
+                                            {# {% else %}
+                                                <div style="text-align:center;padding:5px; ">
+                                                    <div class="material-icons">image_not_supported</div>
+                                                    <div>No image</div>
+                                                </div> #}
+                                            {% endif %}
+                                            <p class="card-text" style="text-overflow:ellipsis;">
+                                                {{item.synopsis | raw}}
+                                            </p>
+                                        {% endif %}
+                                        {% if item.firstName is defined %}
+                                            <h5 class="card-title">{{item.firstName}} {{item.lastName}}</h5>
+                                            {% if item.dateOfBirth is defined %}
+                                                <div class="text-muted mb-2">{{item.dateOfBirth|date("m/d/Y")}} - {{item.dateOfBirth|date("m/d/Y") ? item.dateOfBirth|date("m/d/Y") : '?'}}</div>
+                                            {% endif %}
+                                            {% if item.image != null %}
+                                                <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.firstName}}{{item.lastName}}"/>
+                                            {# {% else %}
+                                                <div style="text-align:center;padding:5px; ">
+                                                    <div class="material-icons">image_not_supported</div>
+                                                    <div>No image</div>
+                                                </div> #}
+                                            {% endif %}
+                                            <p class="card-text" style="text-overflow:ellipsis;">
+                                                {{item.biography | raw}}
+                                            </p>
+                                        {% endif %}
+                                        
+                                        
+                                        
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
                 {% endif %}
-            {% else %}
-                <h1> {{items.title}} Catalog </h2>
-            {% endif %}
-            
-            <div class="row" style="justify-content: center;">
-                {% for item in items.items %}
-                    <div class="card col-md-4" style="width: 18rem; margin:5px;">
-                        <a href="{{items.path}}/{{item.id }}">
-                            <div class="card-body" 
-                                style="max-height:500px;
-                                {% if item.synopsis is defined or item.biography is defined %}
-                                    height:250px;
-                                {% endif %}
-                                overflow: auto hidden;
-                                whitespace: no-wrap;
-                                box-sizing: content-box;"
-                            >
-                                {% if item.name is defined %}
-                                    <h5 class="card-title">{{item.name}}</h5>
-                                {% endif %}
-                                {% if item.synopsis is defined %}
-                                    {% if item.image != null %}
-                                        <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.name}}"/>
-                                    {# {% else %}
-                                        <div style="text-align:center;padding:5px; ">
-                                            <div class="material-icons">image_not_supported</div>
-                                            <div>No image</div>
-                                        </div> #}
-                                    {% endif %}
-                                    <p class="card-text" style="text-overflow:ellipsis;">
-                                        {{item.synopsis | raw}}
-                                    </p>
-                                {% endif %}
-                                {% if item.firstName is defined %}
-                                    <h5 class="card-title">{{item.firstName}} {{item.lastName}}</h5>
-                                    {% if item.dateOfBirth is defined %}
-                                        <div class="text-muted mb-2">{{item.dateOfBirth|date("m/d/Y")}} - {{item.dateOfBirth|date("m/d/Y") ? item.dateOfBirth|date("m/d/Y") : '?'}}</div>
-                                    {% endif %}
-                                    {% if item.image != null %}
-                                        <img style="width:100%"; src="/assets/upload/images/{{item.image}}" alt="{{item.firstName}}{{item.lastName}}"/>
-                                    {# {% else %}
-                                        <div style="text-align:center;padding:5px; ">
-                                            <div class="material-icons">image_not_supported</div>
-                                            <div>No image</div>
-                                        </div> #}
-                                    {% endif %}
-                                    <p class="card-text" style="text-overflow:ellipsis;">
-                                        {{item.biography | raw}}
-                                    </p>
-                                {% endif %}
-                                
-                                
-                                
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
             </div>
         </div>
         

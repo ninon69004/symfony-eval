@@ -37,7 +37,3 @@
     https://developer.mozilla.org/fr/docs/Web/CSS/::-webkit-scrollbar
     scrollbar
 
-// TODO
-
-templtes
-routes

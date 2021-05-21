@@ -10,42 +10,9 @@ a{
 }
 h1 {
     margin-top: 20vh;
+    margin-bottom: 3vh;
 }
-.article-view-content h1,.article-view-content h2,.article-view-content h3 {
-    text-transform: none !important;
-    text-align: left !important;
-}
-.article-view-content h1 {
-    margin-top: 1vh;
-}
-.article-view-content blockquote {
-    padding-left: 2rem;
-    border-left: rgba(255,255,255,0.5) solid 1rem;
-}
-.round-image-presentation {
-    margin: 5vh;
-    border-radius: 50% !important;
-    text-align: center !important;
-    height: 50vh !important;
 
-}
-.round-image-presentation div.home-image {
-    height: 50vh !important;
-    display: inline-block;
-    background: url("/../../assets/images/images-libres.jpg")  no-repeat;
-    aspect-ratio: 1;
-    background-size: cover;
-    
-}
-.divider-white {
-    background-color: #fff;
-    height: 1vh;
-    width: 80%;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    margin-left: 10%;
-    margin-right: 10%;
-}
 
 form[name="registration_form"] div{
     padding: 5px;

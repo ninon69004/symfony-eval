@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="row" style="justify-content: center;">
-        <h1>About</h1>
+        <h1 style="margin-top: 10vh;margin-bottom: 2vh;">About</h1>
+        <div>This site was made by Ninon Auburtin, as a school project to learn Symfony.<div>
+        <div>The following sources were used to make this website :</div>
+        <ul >
+            <li>For the registration form : https://symfony.com/doc/current/doctrine/registration_form.html</li>
+            <li>To add a class on a registration input : https://stackoverflow.com/questions/6734821/how-to-set-a-class-attribute-to-a-symfony2-form-input</li>
+            <li>To make a side bar with bootstrap: https://bootstrapious.com/p/bootstrap-sidebar</li>
+            <li>To style the scrollbar : https://developer.mozilla.org/fr/docs/Web/CSS/::-webkit-scrollbar</li>
+
+    
+        </ul>
     </div>
 </div>
 {% endblock %}

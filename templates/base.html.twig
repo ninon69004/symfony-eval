@@ -45,9 +45,6 @@
                                 <a class="nav-link" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/">Movies</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="/actor">Actors</a>
                             </li>
                             <li class="nav-item">
@@ -56,14 +53,21 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/genre">Genres</a>
                             </li>
+                            
                             {% if app.user %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin">Catalog manager</a>
                                 </li>
                             {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about">About</a>
+                            </li>
+                            
                         </ul>
                         {% if app.user %}
-                            <span style="color: #fff;">{{ app.user.username }}</span>
+                            <a class="nav-link" href="/profile/{{app.user.id}}">
+                                <span style="color: #fff;">{{ app.user.username }}</span>
+                            </a>
                             <a class="nav-link" href="/logout">
                                 <span class="material-icons" style="color: #fff;">logout</span>
                             </a>
