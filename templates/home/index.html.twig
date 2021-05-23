@@ -17,20 +17,21 @@
 
 {% block body %}
 <script type="text/javascript">
-    function redirect(path){
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $('#content').toggleClass('active');
+            $('#sidebarCollapse').toggleClass('active');
         });
-    }
+
+    });
 </script>
 <div style="display: flex; align-items: stretch; height: 100%; width: 100vw;" >
             
         <!-- Sidebar -->
-        <div id="sidebar" style="padding: 20px; background: rgba(155,155,155,0.3); height: 100%; overflow-y: scroll; width: 20%;">
+        <div id="sidebar" style="padding: 20px; background: #ccc;height: 90vh; overflow-y: scroll;">
+            
             <div class="sidebar-header">
                 <h3>Movie Categories</h3>
             </div>
@@ -55,10 +56,15 @@
                    
                 {% endfor %}
             </ul>
-        </div>          
-        <div id="content" style="height: 100%; overflow-y: scroll; width: 80%;">
+        </div>
+        <div id="content" style="height: 90vh; overflow-y: scroll;">
+            <a id="sidebarCollapse" class="button btn btn-dark">
+                <span class="material-icons">
+                    arrow_back
+                </span>
+            </a>
             <div class="container">
-                <a></a>
+                
                 {% if category is defined %}
                     {% if category.item.name is defined %}
                         <h1>{{category.title}}: {{category.item.name}}</h1>

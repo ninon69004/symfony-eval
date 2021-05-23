@@ -65,8 +65,8 @@
                             
                         </ul>
                         {% if app.user %}
-                            <a class="nav-link" href="/profile/{{app.user.id}}">
-                                <span style="color: #fff;">{{ app.user.username }}</span>
+                            <a class="navbar-nav" href="/profile/{{app.user.id}}">
+                                <span class="nav-link" >{{ app.user.firstName }} {{ app.user.lastName }}</span>
                             </a>
                             <a class="nav-link" href="/logout">
                                 <span class="material-icons" style="color: #fff;">logout</span>
