@@ -13,8 +13,10 @@
     symfony console doctrine:fixtures:load
 
     then 
-        register a new user
-        or login with email : admin@test.com and password: admin1
+        login with email : admin@test.com and password: admin1
+        or register a new user
+
+    I added a profile page /profile/{id}, you can find the link in the navbar by clicking on the user's name.
 
     
 
@@ -30,9 +32,6 @@
 
     https://bootstrapious.com/p/bootstrap-sidebar
     side bar classes
-
-    https://stackoverflow.com/questions/6401714/php-order-array-by-date
-    sorting dates
 
     https://developer.mozilla.org/fr/docs/Web/CSS/::-webkit-scrollbar
     scrollbar
